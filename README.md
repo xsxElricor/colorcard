@@ -15,11 +15,51 @@
 - 照片圆角边框开关
 - 导出短边 1080px 的 PNG
 
-## 使用
+## 下载与使用
 
-直接用浏览器打开 `color-card.html` 即可，无需服务器、无需联网、无需注册。
+> GitHub 页面只显示源码、**不会运行网页**。请先把整个仓库下载到本地再使用。
 
-## 离线批量导出（可选）
+**方式一：下载压缩包（推荐，最简单）**
+
+1. 在本页右上角点击绿色的 **Code** 按钮 → **Download ZIP**
+2. 解压得到一个文件夹
+3. 双击打开其中的 `color-card.html`，即可在浏览器中使用
+
+**方式二：克隆仓库**
+
+```bash
+git clone https://github.com/xsxElricor/colorcard.git
+cd colorcard
+```
+
+然后双击 `color-card.html`。
+
+**无需安装、无需构建、无需联网、无需注册。** 网页版不依赖 `node_modules`，全部在浏览器本地运行。
+
+### 重要：请保持目录结构
+
+`color-card.html` 通过相对路径引用 `styles.css` 和 `src/` 下的脚本：
+
+```
+color-card.html
+styles.css
+src/
+  app.js  renderer.js  colorNaming.js  colorExtraction.js  i18n.js
+```
+
+如果逐个单独下载文件、丢失了 `src/` 目录，页面会打开但功能失效。**请用 Download ZIP 整包下载。**
+
+### 关于字体
+
+配色卡用系统字体渲染。Windows 上最全（微软雅黑、楷体、宋体、Segoe UI、Consolas 等）；macOS / Linux 上部分字体会自动回退（可正常使用，只是字形不同）。
+
+### 在线使用（可选）
+
+若仓库启用了 GitHub Pages，可以直接访问 `https://xsxElricor.github.io/colorcard/` 在线使用（需要根目录提供 `index.html`）。
+
+## 离线批量导出（可选，需要 Node）
+
+网页版不需要任何安装；以下仅用于「命令行批量导出卡片」：
 
 ```bash
 npm install
