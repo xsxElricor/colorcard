@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>配色卡生成器 · ColorCard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◐</span>
+      <span class="brand-name">ColorCard</span>
+      <span class="brand-badge">local</span>
+    </div>
+    <div class="lang-switch" id="langSwitch">
+      <button class="lang-btn" data-locale="zh">中文</button>
+      <button class="lang-btn" data-locale="en">EN</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Home screen: intro + upload -->
+    <div id="home" class="home">
+      <div class="intro">
+        <h1 class="intro-title" data-i18n="intro.title">照片一键生成配色卡</h1>
+        <p class="intro-desc" data-i18n="intro.desc">
+          上传一张照片，自动提取主色并生成一张可分享的配色卡。可自定义比例、色块布局、字体与水印，全部在本地完成，照片不会离开你的电脑。
+        </p>
+      </div>
+
+      <section id="dropzone" class="dropzone">
+        <input id="fileInput" type="file" accept="image/*" hidden />
+        <div class="dz-inner" id="dzInner">
+          <div class="dz-icon">＋</div>
+          <p class="dz-title" data-i18n="dz.title">把照片拖进来，或点击选择</p>
+          <p class="dz-hint" data-i18n="dz.hint">支持 JPG / PNG / WebP 等格式</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Processing overlay -->
+    <div id="processing" class="overlay hidden">
+      <div class="spinner"></div>
+      <p class="overlay-text" data-i18n="processing.text">正在提取配色…</p>
+    </div>
+
+    <!-- Editor screen -->
+    <section id="editor" class="editor hidden">
+      <div class="preview-area">
+        <div id="canvasWrap" class="canvas-wrap">
+          <canvas id="cardCanvas" width="1080" height="1350"></canvas>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-body">
+          <div class="panel-col">
+            <div class="panel-section">
+              <span class="panel-label" data-i18n="sec.size">尺寸</span>
+              <div class="seg-group" id="ratioBtns"></div>
+              <div class="seg-group" id="orientBtns"></div>
+            </div>
+
+            <div class="panel-section">
+              <span class="panel-label" data-i18n="sec.layout">布局</span>
+              <div class="seg-group" id="blockPosBtns"></div>
+              <div id="blockPosWrap" class="block-pos-wrap">
+                <button class="btn btn-full" id="btnTextPos"></button>
+              </div>
+              <label class="switch-row">
+                <input type="checkbox" id="borderToggle" />
+                <span class="switch"></span>
+                <span class="switch-label" data-i18n="label.showBorder">显示边框</span>
+              </label>
+            </div>
+
+            <div class="panel-section">
+              <span class="panel-label" data-i18n="sec.palette">配色</span>
+              <div id="swatches" class="swatches"></div>
+              <button class="btn btn-full" id="btnEyedropper" data-i18n="btn.eyedropper">吸管取色</button>
+              <input id="hexInput" class="text-input" type="text" maxlength="7" data-i18n-placeholder="ph.hex" />
+            </div>
+
+            <div class="panel-actions">
+              <button class="btn btn-primary" id="btnDownload" data-i18n="btn.download">下载 PNG</button>
+              <button class="btn" id="btnNew" data-i18n="btn.new">重新选图</button>
+            </div>
+          </div>
+
+          <div class="panel-col">
+            <div class="panel-section">
+              <span class="panel-label" data-i18n="sec.text">文字编辑</span>
+              <input id="nameInput" class="text-input" type="text" maxlength="40" data-i18n-placeholder="ph.name" />
+            </div>
+
+            <div class="panel-section">
+              <span class="panel-label" data-i18n="sec.font">字体</span>
+              <div class="font-field">
+                <span class="sub-label" data-i18n="label.latinFont">英文字体</span>
+                <select id="fontSelect" class="text-input font-select"></select>
+              </div>
+              <div class="font-field">
+                <span class="sub-label" data-i18n="label.cjkFont">中文字体</span>
+                <select id="cjkSelect" class="text-input font-select"></select>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <span class="panel-label" data-i18n="sec.meta">文案</span>
+              <input id="moodTextInput" class="text-input" type="text" maxlength="40" data-i18n-placeholder="ph.mood" />
+              <label class="switch-row">
+                <input type="checkbox" id="moodToggle" checked />
+                <span class="switch"></span>
+                <span class="switch-label" data-i18n="label.showMood">显示情绪</span>
+              </label>
+              <div class="switch-row-group">
+                <label class="switch-row">
+                  <input type="checkbox" id="dateToggle" />
+                  <span class="switch"></span>
+                  <span class="switch-label" data-i18n="label.showDate">显示日期</span>
+                </label>
+                <label class="switch-row">
+                  <input type="checkbox" id="dateTodayToggle" checked />
+                  <span class="switch"></span>
+                  <span class="switch-label" data-i18n="label.useToday">使用今天</span>
+                </label>
+              </div>
+              <div id="dateManual" class="date-manual">
+                <input id="dateY" class="text-input date-part year" type="text" inputmode="numeric" maxlength="4" data-i18n-placeholder="ph.year" />
+                <input id="dateM" class="text-input date-part" type="text" inputmode="numeric" maxlength="2" data-i18n-placeholder="ph.month" />
+                <input id="dateD" class="text-input date-part" type="text" inputmode="numeric" maxlength="2" data-i18n-placeholder="ph.day" />
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <span class="panel-label" data-i18n="sec.watermark">水印</span>
+              <label class="switch-row">
+                <input type="checkbox" id="wmToggle" checked />
+                <span class="switch"></span>
+                <span class="switch-label" data-i18n="label.showWatermark">显示水印</span>
+              </label>
+              <input id="watermarkInput" class="text-input" type="text" maxlength="60" value="ColorCard.local" data-i18n-placeholder="ph.watermark" />
+              <select id="wmFontSelect" class="text-input font-select"></select>
+              <div class="seg-group wm-pos" id="wmPosBtns"></div>
+            </div>
+
+            <div class="panel-section info-section">
+              <div class="info-line"><span class="info-label" data-i18n="info.mood">情绪</span><span id="infoMood">—</span></div>
+              <div class="info-line"><span class="info-label" data-i18n="info.hex">色值</span><span id="infoHex" class="mono">#—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="hint-line" data-i18n="hint.drag">点击照片区域可拖拽 / 滚轮缩放。</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="src/colorNaming.js"></script>
+  <script src="src/colorExtraction.js"></script>
+  <script src="src/renderer.js"></script>
+  <script src="src/i18n.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>

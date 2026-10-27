@@ -1,0 +1,12 @@
+{
+  "name": "photocolor-local",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local aesthetic color-card generator (PhotoColor-like) with offline export runner",
+  "scripts": {
+    "generate": "node scripts/generate.js"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.71"
+  }
+}
