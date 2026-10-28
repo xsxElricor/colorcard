@@ -1,11 +1,11 @@
-/* ===== PhotoColor Local - Color Naming Module ===== */
+/* ===== ColorCard - Color Naming Module ===== */
 /* Rule-based color naming + mood tags, bilingual (en / zh). Fully deterministic. */
 
 (function (global, factory) {
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = factory();
   } else {
-    global.PhotoColorNaming = factory();
+    global.ColorCardNaming = factory();
   }
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
@@ -454,26 +454,8 @@
     return { hex: normalized, hsl, family, baseName, modifier, displayName, moodTags, textColor };
   }
 
-  function getColorNameFromHex(hex, locale) {
-    const desc = describeColor(hex, locale);
-    return {
-      hex: desc.hex,
-      hsl: desc.hsl,
-      family: desc.family,
-      name: desc.displayName,
-      displayName: desc.displayName,
-      mood: desc.moodTags,
-      moodTags: desc.moodTags,
-      textColor: desc.textColor,
-    };
-  }
-
   return {
     normalizeHex,
-    hexToHsl,
-    getReadableTextColor,
-    getColorFamily,
     describeColor,
-    getColorNameFromHex,
   };
 });

@@ -1,4 +1,4 @@
-/* ===== PhotoColor Local - Card Renderer =====
+/* ===== ColorCard - Card Renderer =====
    Renders an aesthetic color card onto any Canvas2D context.
    Shared between browser and Node (@napi-rs/canvas). No DOM access.
 
@@ -12,7 +12,7 @@
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = factory();
   } else {
-    global.PhotoColorRenderer = factory();
+    global.ColorCardRenderer = factory();
   }
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
@@ -29,8 +29,6 @@
     { id: '4:5', w: 4, h: 5 },
     { id: '9:16', w: 9, h: 16 },
   ];
-
-  const ORIENTATIONS = ['portrait', 'landscape', 'square'];
 
   const TEXT_POSITIONS = ['bottom-left', 'top-left', 'top-right', 'bottom-right', 'center'];
 
@@ -542,20 +540,12 @@
   }
 
   return {
-    BASE,
-    CORNER_R,
     RATIOS,
-    ORIENTATIONS,
     TEXT_POSITIONS,
-    FONT_FAMILY,
     FONTS,
     CJK_FONTS,
     computeDims,
     blockPositionsFor,
-    roundRectPath,
-    regionPath,
-    wrapText,
-    drawImageCover,
     renderCard,
   };
 });

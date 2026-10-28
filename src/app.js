@@ -1,11 +1,11 @@
-/* ===== PhotoColor Local - Browser UI ===== */
+/* ===== ColorCard - Browser UI ===== */
 (function () {
   'use strict';
 
-  const Naming = window.PhotoColorNaming;
-  const Extraction = window.PhotoColorExtraction;
-  const Renderer = window.PhotoColorRenderer;
-  const I18n = window.PhotoColorI18n;
+  const Naming = window.ColorCardNaming;
+  const Extraction = window.ColorCardExtraction;
+  const Renderer = window.ColorCardRenderer;
+  const I18n = window.ColorCardI18n;
 
   const RATIOS = Renderer.RATIOS;
   const TEXT_POSITIONS = Renderer.TEXT_POSITIONS;
@@ -475,7 +475,7 @@
     updateWmControls();
     if (currentImage) renderCard();
     try {
-      localStorage.setItem('photocolor_locale', locale);
+      localStorage.setItem('colorcard_locale', locale);
     } catch (e) {
       /* ignore */
     }
@@ -876,7 +876,7 @@
 
   // ---- Init ----
   try {
-    const saved = localStorage.getItem('photocolor_locale');
+    const saved = localStorage.getItem('colorcard_locale');
     if (saved === 'en' || saved === 'zh') locale = saved;
   } catch (e) {
     /* ignore */

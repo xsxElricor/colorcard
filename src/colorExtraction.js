@@ -1,4 +1,4 @@
-/* ===== PhotoColor Local - Image Color Extraction ===== */
+/* ===== ColorCard - Image Color Extraction ===== */
 /* Fixed-grid histogram quantization + weighted palette selection.
    Pure functions: no DOM dependency (works in browser and Node). */
 
@@ -6,7 +6,7 @@
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = factory();
   } else {
-    global.PhotoColorExtraction = factory();
+    global.ColorCardExtraction = factory();
   }
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
@@ -347,10 +347,7 @@
   }
 
   return {
-    clampByte,
     rgbToHex,
-    luminance,
-    colorDistance,
     samplePixels,
     extractColors,
   };

@@ -1,4 +1,4 @@
-/* ===== PhotoColor Local - Offline export runner =====
+/* ===== ColorCard - Offline export runner =====
    Generates color cards from `demopic/` into `output/`.
    Also renders a `_layouts.png` grid showing every layout combination
    (ratios x orientation x block position) for the first image.

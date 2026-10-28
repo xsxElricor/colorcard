@@ -1,8 +1,8 @@
 {
-  "name": "photocolor-local",
+  "name": "colorcard",
   "version": "0.1.0",
   "private": true,
-  "description": "Local aesthetic color-card generator (PhotoColor-like) with offline export runner",
+  "description": "Turn a photo into a shareable aesthetic color card. Local-only, no backend.",
   "scripts": {
     "generate": "node scripts/generate.js"
   },

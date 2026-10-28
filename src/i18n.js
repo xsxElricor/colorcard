@@ -1,11 +1,11 @@
-/* ===== PhotoColor Local - UI i18n (zh / en) ===== */
+/* ===== ColorCard - UI i18n (zh / en) ===== */
 /* Static UI strings + dynamic labels. Color names/mood come from colorNaming.js. */
 
 (function (global, factory) {
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = factory();
   } else {
-    global.PhotoColorI18n = factory();
+    global.ColorCardI18n = factory();
   }
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
@@ -124,7 +124,6 @@
     },
   };
 
-  const LOCALES = ['zh', 'en'];
   let locale = 'zh';
 
   function normalize(value) {
@@ -162,5 +161,5 @@
     });
   }
 
-  return { STRINGS, LOCALES, t, getLocale, setLocale, apply };
+  return { STRINGS, t, getLocale, setLocale, apply };
 });
